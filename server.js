@@ -1,6 +1,6 @@
 const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose');
-const cors = require('cors');  // Importing CORS package
 require('dotenv').config();
 
 const authRoutes = require('./routes/authRoutes');
@@ -8,15 +8,16 @@ const authRoutes = require('./routes/authRoutes');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// ✅ Updated CORS setup
+// Configure CORS to allow requests from your frontend (localhost:3000)
 const corsOptions = {
-  origin: 'http://localhost:3000',  // Allow requests from the frontend (localhost for dev)
+  origin: 'http://localhost:3000', // Allow only this frontend to make requests
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  credentials: true,
-  optionsSuccessStatus: 200
+  credentials: true, // Allow cookies to be sent
+  optionsSuccessStatus: 200,
 };
 
-app.use(cors(corsOptions)); // Applying CORS middleware
+// Enable CORS with the above options
+app.use(cors(corsOptions));
 
 // Middleware
 app.use(express.json());
